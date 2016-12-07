@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+  <property name="LOG_DIRECTORY" value="/disk1/characterreader/logs" />
+
+  <appender name="debugLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOG_DIRECTORY}/debug/debug.log</file>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>DEBUG</level>
+    </filter>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <Pattern>
+        %magenta(%d{yyyy-MM-dd HH:mm:ss}) %gray([%thread]) %highlight(%-5level)  %green(%logger{5}) [%F:%L] - %msg%n
+      </Pattern>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>${LOG_DIRECTORY}/debug/archive/debug.%d{yyyy-MM-dd_HH}_%i.log</fileNamePattern>
+      <maxFileSize>10MB</maxFileSize>
+      <maxHistory>7</maxHistory>
+      <totalSizeCap>20GB</totalSizeCap>
+    </rollingPolicy>
+  </appender>
+  <appender name="infoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOG_DIRECTORY}/info/info.log</file>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>INFO</level>
+    </filter>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <Pattern>
+        %magenta(%d{yyyy-MM-dd HH:mm:ss}) %gray([%thread]) %highlight(%-5level)  %green(%logger{5}) [%F:%L] - %msg%n
+      </Pattern>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>${LOG_DIRECTORY}/info/archive/info.%d{yyyy-MM-dd_HH}_%i.log</fileNamePattern>
+      <maxFileSize>10MB</maxFileSize>
+      <maxHistory>7</maxHistory>
+      <totalSizeCap>20GB</totalSizeCap>
+    </rollingPolicy>
+  </appender>
+  <appender name="errorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOG_DIRECTORY}/error/error.log</file>
+    <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+      <level>ERROR</level>
+    </filter>
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <Pattern>
+        %magenta(%d{yyyy-MM-dd HH:mm:ss}) %gray([%thread]) %highlight(%-5level)  %green(%logger{5}) [%F:%L] - %red(%msg%n)
+      </Pattern>
+    </encoder>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+      <fileNamePattern>${LOG_DIRECTORY}/error/archive/error.%d{yyyy-MM-dd_HH}_%i.log</fileNamePattern>
+      <maxFileSize>10MB</maxFileSize>
+      <maxHistory>7</maxHistory>
+      <totalSizeCap>20GB</totalSizeCap>
+    </rollingPolicy>
+  </appender>
+
+  <logger level="debug" name="com.sankalp.characterreader">
+    <appender-ref ref="infoLog" level="info" />
+    <appender-ref ref="debugLog" level="debug" />
+    <appender-ref ref="errorLog" level="error" />
+  </logger>
+</configuration>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Character Reader</title>
+    <script type='text/javascript' src='http://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.4.0/fabric.min.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <style type='text/css'>
+      #sheet {
+        border:1px solid black;
+      }
+    </style>
+    <script type='text/javascript'>
+      var canvas = null;
+      window.onload = function () {
+        createCanvas();
+        $("#clear").click(function (e) {
+          if (canvas != null) {
+            canvas.clear();
+            $("#result").html("");
+            $("#serverstatus").html("");
+          }
+        });
+        $("#read").click(function (e) {
+          if (canvas != null) {
+            canvasURL = canvas.toDataURL();
+            $.post("read", {"image": canvas.toDataURL("image/jpeg")},
+            function (data, status) {
+              $("#result").html(data);
+              $("#serverstatus").html(status);
+            });
+          }
+        });
+      }
+      function createCanvas() {
+        canvas = new fabric.Canvas('sheet');
+        canvas.isDrawingMode = true;
+        canvas.freeDrawingBrush.width = 3;
+        canvas.freeDrawingBrush.color = "#ffffff";
+        canvas.backgroundColor = "#000000";
+        canvas.renderAll();
+
+      }
+    </script>
+  </head>
+  <body>
+    <canvas id="sheet" width="28" height="28"></canvas>
+    <button id="clear">Clear</button>
+    <button id="read">Read</button>
+    <div id="serverstatus" style="color:red"></div>
+    <div id="result"></div>
+  </body>
+</html>
